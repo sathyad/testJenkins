@@ -1,0 +1,44 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+           
+  <!--  context:property-placeholder location="F:/Source/CjcmsReleaseEditors/AcsEditorService/config.properties" / -->
+  <context:property-placeholder location="file:///F:/Source/CjcmsReleaseEditors/AcsEditorService/config.properties" />
+  	<context:component-scan base-package="gov.montgomerycountymd.ijis.acs.service" />
+
+<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+    
+<bean id="acsServiceImpl" class="gov.montgomerycountymd.ijis.acs.service.AcsServiceImpl" >
+     
+    </bean>
+
+ 
+  
+    <bean class="org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter" >
+  
+     <property name="baseAddress" value="http://localhost:8980/" />
+    
+    </bean>
+  
+      <bean id="acsServiceEndpoint" class="gov.montgomerycountymd.ijis.acs.service.AcsServiceEndpoint">
+        <property name="acsServiceImpl" ref="acsServiceImpl" />
+    </bean>
+    
+    
+<!--      
+    <bean id="acsMapping" class="gov.montgomerycountymd.ijis.acs.AcsMapping"> 
+ <property name="marshaller" ref="castorMarshaller" /> 
+ <property name="unmarshaller" ref="castorMarshaller" /> 
+
+ </bean> 
+  -->
+ <bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller"> 
+    </bean>
+</beans>
